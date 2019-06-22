@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/rabbit
+        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <rabbit:connection-factory id="connectionFactory" host="localhost" username="joe" password="joe"/>
+ 
+    <rabbit:admin connection-factory="connectionFactory" />
+
+<!-- ******************* TOPIC *************************** -->
+    <rabbit:queue name="purchasesStore" />
+    <rabbit:queue name="purchasesOnline" />
+    <!--  added topic filter to bind only orders that are "classic" -->
+    <rabbit:queue name="purchasesOnlineClassic" />
+
+    <rabbit:topic-exchange name="order">
+        <rabbit:bindings>
+            <rabbit:binding queue="purchasesOnline" pattern="purchases.online.#" />
+            <rabbit:binding queue="purchasesOnlineClassic" pattern="purchases.online.classic.#" />
+              <rabbit:binding queue="purchasesStore" pattern="purchases.store.#" />
+         </rabbit:bindings>
+    </rabbit:topic-exchange>
+    
+<!-- **************** TOPIC PRODUCER  -->
+<!-- routing-key is "default" -->
+    <rabbit:template id="topicTemplate" connection-factory="connectionFactory"
+                     reply-timeout="2000" routing-key="purchases.store"
+                     exchange="order" />
+
+
+<!--  ****************  TOPIC CONSUMER for KEY purchases.store on Queue purchasesStore************************* -->
+ <rabbit:listener-container connection-factory="connectionFactory">
+	<rabbit:listener ref="orderListener" method="listen" queue-names="purchasesStore" />
+</rabbit:listener-container>
+
+<bean id="orderListener" class="edu.mum.amqp.OrderListener" />
+
+
+<!-- *********** DIRECT EXCHANGE ***************** -->
+	<rabbit:queue name="directQueue" durable="true"/>
+	<rabbit:queue name="answerQueue" durable="true"/>
+
+	 <rabbit:direct-exchange name="direct" durable="true">
+	  <rabbit:bindings>
+	   <rabbit:binding queue="directQueue" key="order.key"></rabbit:binding>
+	   <rabbit:binding queue="answerQueue" key="order.answer"></rabbit:binding>
+	  </rabbit:bindings>
+	 </rabbit:direct-exchange>
+
+<!-- **************** DIRECT PRODUCER  -->
+<!-- This producer will publish with this routing key [essentially to queue directQueue] associated with it...] -->
+    <rabbit:template id="directTemplate" connection-factory="connectionFactory"
+                     reply-timeout="2000" routing-key="order.key"
+                     exchange="direct" />
+
+<!-- This producer will publish with this routing key [essentially to queue answerQueue] associated with it...] -->
+    <rabbit:template id="answerTemplate" connection-factory="connectionFactory"
+                     reply-timeout="2000" routing-key="order.answer"
+                     exchange="direct" />
+
+
+<!--  ****************  DIRECT CONSUMER ************************* -->
+ <rabbit:listener-container connection-factory="connectionFactory">
+	<rabbit:listener ref="queueListener" method="listen" queue-names="directQueue" />
+</rabbit:listener-container>
+
+<bean id="queueListener" class="edu.mum.amqp.DirectListener" />
+
+
+
+</beans>

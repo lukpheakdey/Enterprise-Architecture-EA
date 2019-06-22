@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="edu.mum.domain">
+    <class name="Vehicle" table="VEHICLE">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="color" column="COLOR" />
+        <property name="wheel" column="WHEEL" />
+        <property name="seat" column="SEAT" />
+        <property name="vehicleNo" column="VEHICLE_NO" />
+    </class> 
+</hibernate-mapping>
+
+	 

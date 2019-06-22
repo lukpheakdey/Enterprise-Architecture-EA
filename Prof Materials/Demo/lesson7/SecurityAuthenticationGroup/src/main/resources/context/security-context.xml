@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation=" 
+	   	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd		
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--  Enable Authorization Annotations -->
+ 	<security:global-method-security pre-post-annotations="enabled"  >
+ 	<security:expression-handler ref="methodExpressionHandler"/>
+	</security:global-method-security>
+ 
+ 
+ <!-- Database security -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider  user-service-ref="userDetailsServiceImpl">
+			<security:password-encoder hash="bcrypt" />               
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+<bean id="userDetailsServiceImpl" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+    <property name="enableGroups" value="true" />
+    <property name="enableAuthorities" value="false" />
+    <property name="dataSource" ref="dataSource" />
+   <property name="usersByUsernameQuery" value="select username,password,enabled from credentials where username=?" />
+   <property name="groupAuthoritiesByUsernameQuery" value="select g.id, g.group_name, a.authority
+                                from groups g, groups_credentials gc, groups_authority ga, authority a
+                                where gc.userCredentials_username = ? and g.id = ga.Groups_id and g.id = gc.Groups_id
+                                and ga.authority_id = a.id" />
+    
+</bean> 
+
+
+    <bean id="methodExpressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <property name="roleHierarchy" ref="roleHierarchy" />
+    </bean>
+
+
+<bean id="roleHierarchy"
+        class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+    <property name="hierarchy">
+        <value>
+			ROLE_SUPERVISOR > ROLE_ADMIN
+		    ROLE_ADMIN > ROLE_USER
+			ROLE_USER > ROLE_GUEST
+	   </value>
+    </property>
+</bean>
+
+</beans>

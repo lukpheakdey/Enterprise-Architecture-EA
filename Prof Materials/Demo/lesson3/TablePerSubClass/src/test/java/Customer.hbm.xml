@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 3:49:09 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <joined-subclass name="edu.mum.domain.Customer" extends="edu.mum.domain.MemberRole" table="CUSTOMER" lazy="false">
+        <key>
+            <column name="ID" />
+        </key>
+        <property name="bonusPoints" type="java.lang.Integer">
+            <column name="BONUSPOINTS" />
+        </property>
+        <list name="orders" inverse="false" table="ORDER" lazy="true">
+            <key>
+                <column name="BONUSPOINTS" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="edu.mum.domain.Order" />
+        </list>
+    </joined-subclass>
+</hibernate-mapping>

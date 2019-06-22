@@ -1,0 +1,9 @@
+
+Exercises fetching WITH Batch Size [can try it with EAGER or LAZY]
+
+Batch Size Indicates the number of Collection fetches...
+In this case with the N+1 there are 3 distinct Fetches - ONE per Parent...
+
+So if we set Batch Size >= 3, there will be ONE fetch...
+If it is 2 there with be 2 fetches [ 2 Lists and then 1 List]
+If it is 1 there with be 3 fetches [ One for each List]

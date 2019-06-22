@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="edu.mum.domain.BillingDetails" table="BILLINGDETAILS" abstract="true">
+        <id name="id" type="java.lang.Long" access="field">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <discriminator type="string">
+            <column name="DISCR_COL" />
+        </discriminator>
+        <property name="version" type="int" access="field">
+            <column name="VERSION" />
+        </property>
+        <property name="owner" type="java.lang.String">
+            <column name="OWNER" />
+        </property>
+        <many-to-one name="user" class="edu.mum.domain.User" access="field" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+        <property name="created" type="java.util.Date" access="field">
+            <column name="CREATED" />
+        </property>
+    </class>
+</hibernate-mapping>

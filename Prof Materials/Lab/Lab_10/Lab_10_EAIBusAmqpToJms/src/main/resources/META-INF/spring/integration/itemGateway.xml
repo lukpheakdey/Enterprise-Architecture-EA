@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:amqp="http://www.springframework.org/schema/integration/amqp"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd
+ 			http://www.springframework.org/schema/integration/amqp 
+ 				http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+     		http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+			http://www.springframework.org/schema/integration/stream
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+	<channel id="fromAmqpItem" /> 
+	<amqp:inbound-channel-adapter channel="fromAmqpItem" queue-names="directQueue" connection-factory="amqpConnectionFactory" />
+
+	<channel id="routeItem" />
+	<transformer id="transformItem" ref="itemTransformer" input-channel="fromAmqpItem" output-channel="routeItem" />
+	
+	<beans:bean id="itemTransformer" class="edu.mum.integration.ItemTransformerImpl" />
+
+	<channel id="moderatePriceChannel" />
+	<channel id="highPriceChannel" />
+	
+	<recipient-list-router id="itemRouter" input-channel="routeItem" timeout="1234" ignore-send-failures="true" apply-sequence="true">
+		<recipient channel="moderatePriceChannel"/>
+		<recipient channel="highPriceChannel"/>
+	</recipient-list-router>
+	
+	<jms:outbound-channel-adapter id="jmsoutModerate" channel="moderatePriceChannel" destination="moderateQueue" />
+	<jms:outbound-channel-adapter id="jmsoutHigh" channel="highPriceChannel" destination="highQueue" />
+</beans:beans>

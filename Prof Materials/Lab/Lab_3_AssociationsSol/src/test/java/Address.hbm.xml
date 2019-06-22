@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="edu.mum.domain.Address" table="ADDRESS">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="street" type="java.lang.String">
+            <column name="STREET" />
+        </property>
+        <property name="zipcode" type="java.lang.String">
+            <column name="ZIPCODE" />
+        </property>
+        <property name="city" type="java.lang.String">
+            <column name="CITY" />
+        </property>
+        <many-to-one name="user" class="edu.mum.domain.User" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="edu.mum.domain.Category" table="CATEGORY">
+        <id name="id" type="java.lang.Long" access="field">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="version" type="int" access="field">
+            <column name="VERSION" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <list name="items" inverse="false" table="ITEM" lazy="true" access="field">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="edu.mum.domain.Item" />
+        </list>
+        <list name="childCategories" inverse="false" table="CATEGORY" lazy="true" access="field">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="edu.mum.domain.Category" />
+        </list>
+        <many-to-one name="parentCategory" class="edu.mum.domain.Category" fetch="join">
+            <column name="PARENTCATEGORY" />
+        </many-to-one>
+        <map name="itemsAndUser" table="ITEM" lazy="true" access="field">
+            <key>
+                <column name="ID" />
+            </key>
+            <map-key type="edu.mum.domain.Item"></map-key>
+            <one-to-many class="edu.mum.domain.Item" />
+        </map>
+        <property name="created" type="java.util.Date" access="field">
+            <column name="CREATED" />
+        </property>
+    </class>
+</hibernate-mapping>

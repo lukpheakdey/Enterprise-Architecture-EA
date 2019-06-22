@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Built-By: lukpheakdey
+Class-Path: dependency/spring-context-4.2.4.RELEASE.jar dependency/spr
+ ing-aop-4.2.4.RELEASE.jar dependency/aopalliance-1.0.jar dependency/s
+ pring-beans-4.2.4.RELEASE.jar dependency/spring-core-4.2.4.RELEASE.ja
+ r dependency/commons-logging-1.2.jar dependency/spring-expression-4.2
+ .4.RELEASE.jar dependency/spring-jms-4.2.4.RELEASE.jar dependency/spr
+ ing-messaging-4.2.4.RELEASE.jar dependency/spring-tx-4.2.4.RELEASE.ja
+ r dependency/activemq-all-5.7.0.jar dependency/javax.jms-api-2.0.1.ja
+ r
+Build-Jdk: 1.8.0_121
+Created-By: Maven Integration for Eclipse
+Main-Class: edu.mum.JmsSenderMain
+

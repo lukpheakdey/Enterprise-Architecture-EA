@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 25, 2016 8:07:50 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="edu.mum.domain.Authority" table="AUTHORITY">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="authority" type="java.lang.String">
+            <column name="AUTHORITY" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/rabbit
+        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <rabbit:connection-factory id="connectionFactory" host="localhost" username="joe" password="joe"/>
+ 
+    <rabbit:admin connection-factory="connectionFactory" />
+
+<!-- ******************* TOPIC *************************** -->
+    <rabbit:queue name="purchasesPhone" />
+ 
+    <rabbit:topic-exchange name="order">
+        <rabbit:bindings>
+            <rabbit:binding queue="purchasesPhone" pattern="purchases.phone.#" />
+          </rabbit:bindings>
+    </rabbit:topic-exchange>
+    
+<!-- **************** TOPIC PRODUCER  -->
+    <rabbit:template id="topicTemplate" connection-factory="connectionFactory"
+                     reply-timeout="2000" routing-key="purchases.phone"      
+                     exchange="order" />
+
+
+</beans>

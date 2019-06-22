@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <subclass name="edu.mum.domain.CreditCard" extends="edu.mum.domain.BillingDetails" discriminator-value="CreditCard" lazy="false">
+        <property name="number" type="java.lang.String" access="field">
+            <column name="NUMBER" />
+        </property>
+        <property name="expMonth" type="java.lang.String" access="field">
+            <column name="EXPMONTH" />
+        </property>
+        <property name="expYear" type="java.lang.String" access="field">
+            <column name="EXPYEAR" />
+        </property>
+    </subclass>
+</hibernate-mapping>

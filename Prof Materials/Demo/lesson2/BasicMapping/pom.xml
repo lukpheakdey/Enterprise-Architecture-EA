@@ -1,0 +1,121 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.mum</groupId>
+  <artifactId>BasicMappig</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+ <dependencyManagement>
+ <dependencies>
+
+        <dependency>
+            <groupId>io.spring.platform</groupId>
+            <artifactId>platform-bom</artifactId>
+            <version>Brussels-SR5</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+   </dependencies>
+   </dependencyManagement>
+ 
+ <dependencies>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+          </dependency>
+ 
+   	<dependency>
+  		<groupId>org.hibernate</groupId>
+  		<artifactId>hibernate-entitymanager</artifactId>
+   	</dependency>
+  	  	<dependency>
+  		<groupId>cglib</groupId>
+  		<artifactId>cglib-nodep</artifactId>
+  		<version>2.2.2</version>
+  	</dependency>
+
+ 	<dependency>
+  		<groupId>mysql</groupId>
+  		<artifactId>mysql-connector-java</artifactId>
+ 		<version>8.0.12</version>
+  	</dependency>
+
+	  <dependency>
+	    <groupId>commons-logging</groupId>
+	    <artifactId>commons-logging</artifactId>
+	 </dependency>
+
+  
+  <!-- These 2 dependencies are for log4j
+       [comment out if want logback]
+   -->
+<!--  	<dependency>
+  		<groupId>log4j</groupId>
+  		<artifactId>log4j</artifactId>
+  	</dependency>
+
+   <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+   </dependency>
+ -->
+ 
+<!-- The following is to use commons-logging with the ABOVE dependencies
+         has runtime discovery - slower -->
+<!-- 
+   <dependency>
+       <groupId>commons-logging</groupId>
+       <artifactId>commons-logging</artifactId>
+    </dependency>
+ -->  
+
+
+<!-- These 2 dependencies if you want to avoid commons-logging for log4j
+       results in compile-time bindings instead of runtime discovery 
+       [BE SURE TO comment out commons-logging above]
+       ANOTHER OPTION: use logback instead of log4j SEE BELOW
+ -->
+<!--    	<dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+	 <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+   	</dependency>
+ -->   	
+   <!-- _______________________________________________________ -->	
+   	<!-- HERE IS THE OTHER OPTION: using logback instead of log4j  
+   	      requires logback.xml instead of log4j.properties
+   	      [Comment out - all other logging related dependencies
+   	-->
+   	<dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+   	
+   	
+   </dependencies>
+
+  	
+    <properties>
+  	<maven.compiler.source>1.8</maven.compiler.source>
+  	<maven.compiler.target>1.8</maven.compiler.target>
+  	<version>1.0</version>
+    </properties>
+  
+</project>

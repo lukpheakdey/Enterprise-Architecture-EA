@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: lukpheakdey
+Class-Path: dependency/spring-context-4.2.4.RELEASE.jar dependency/spr
+ ing-aop-4.2.4.RELEASE.jar dependency/aopalliance-1.0.jar dependency/s
+ pring-beans-4.2.4.RELEASE.jar dependency/spring-core-4.2.4.RELEASE.ja
+ r dependency/commons-logging-1.2.jar dependency/spring-expression-4.2
+ .4.RELEASE.jar
+Build-Jdk: 1.8.0_121
+Created-By: Maven Integration for Eclipse
+Main-Class: edu.mum.HelloWorld
+

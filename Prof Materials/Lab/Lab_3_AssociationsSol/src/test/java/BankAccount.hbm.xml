@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <subclass name="edu.mum.domain.BankAccount" extends="edu.mum.domain.BillingDetails" discriminator-value="BankAccount" lazy="false">
+        <property name="account" type="java.lang.String">
+            <column name="ACCOUNT" />
+        </property>
+        <property name="bankname" type="java.lang.String">
+            <column name="BANKNAME" />
+        </property>
+        <property name="swift" type="java.lang.String">
+            <column name="SWIFT" />
+        </property>
+    </subclass>
+</hibernate-mapping>

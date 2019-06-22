@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/rabbit
+        http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <rabbit:connection-factory id="connectionFactory" host="localhost" username="joe" password="joe"/>
+
+  <!-- Dynamic queue -->
+    <rabbit:queue name="purchasesStoreToo" durable="false" auto-delete="true" exclusive="false"/>
+
+    <rabbit:topic-exchange name="order">
+        <rabbit:bindings>
+               <rabbit:binding queue="purchasesStoreToo" pattern="purchases.store.#" />
+         </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+ <rabbit:listener-container connection-factory="connectionFactory">
+ <!-- Get ALL Online purchases OR just "Classic" ones -->
+<!-- 	<rabbit:listener ref="orderListener" method="listen" queue-names="purchasesOnlineClassic" /> -->
+	<rabbit:listener ref="orderListener" method="listen" queue-names="purchasesOnline" />
+	<rabbit:listener ref="orderListenerStore" method="listen" queue-names="purchasesStoreToo" />
+</rabbit:listener-container>
+
+<bean id="orderListener" class="edu.mum.amqp.OrderListener" />
+<bean id="orderListenerStore" class="edu.mum.amqp.OrderListenerStore" />
+
+
+<!--  ****************  ANSWER CONSUMER ************************* -->
+ <rabbit:listener-container connection-factory="connectionFactory">
+	<rabbit:listener ref="queueListener" method="listen" queue-names="answerQueue" />
+</rabbit:listener-container>
+
+<bean id="queueListener" class="edu.mum.amqp.AnswerListener" />
+
+
+</beans>

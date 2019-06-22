@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 1:53:46 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="edu.mum.domain.User" table="USER">
+        <id name="id" type="java.lang.Long">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="version" type="int" access="field">
+            <column name="VERSION" />
+        </property>
+        <property name="firstName" type="java.lang.String">
+            <column name="FIRSTNAME" />
+        </property>
+        <property name="lastName" type="java.lang.String">
+            <column name="LASTNAME" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <property name="ranking" type="int">
+            <column name="RANKING" />
+        </property>
+        <property name="admin" type="boolean">
+            <column name="ADMIN" />
+        </property>
+        <one-to-one name="userCredentials" class="edu.mum.domain.UserCredentials"></one-to-one>
+        <set name="addresses" table="ADDRESS" inverse="false" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="edu.mum.domain.Address" />
+        </set>
+    </class>
+</hibernate-mapping>

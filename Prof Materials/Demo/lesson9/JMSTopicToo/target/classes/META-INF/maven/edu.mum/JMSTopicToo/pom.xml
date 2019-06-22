@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.mum</groupId>
+  <artifactId>JMSTopicToo</artifactId>
+  <packaging>jar</packaging>
+  <version>4.0-SNAPSHOT</version>
+  <name>JMS</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.version>4.2.4.RELEASE</spring.version>
+    <activemq.version>5.14.1</activemq.version>
+	  	<maven.compiler.source>1.8</maven.compiler.source>
+	  	<maven.compiler.target>1.8</maven.compiler.target>
+   </properties>
+   
+   
+   	    <dependencyManagement>
+	 	   <dependencies>
+	  
+	         <dependency>
+	            <groupId>org.springframework</groupId>
+	            <artifactId>spring-framework-bom</artifactId>
+	            <version>4.2.4.RELEASE</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	
+	 
+	      </dependencies>
+	   </dependencyManagement>
+	 
+   
+   
+  <dependencies>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+       </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jms</artifactId>
+       </dependency>
+      <dependency>
+          <groupId>org.apache.activemq</groupId>
+          <artifactId>activemq-all</artifactId>
+          <version>${activemq.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>javax.jms</groupId>
+          <artifactId>javax.jms-api</artifactId>
+          <version>2.0.1</version>
+      </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>edu.mum.JmsSenderMain</mainClass>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>dependency/</classpathPrefix>
+            </manifest>
+            <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+        <plugin>
+            <groupId>org.apache.activemq.tooling</groupId>
+            <artifactId>maven-activemq-plugin</artifactId>
+            <version>${activemq.version}</version>
+            <configuration>
+                <fork>false</fork>
+            </configuration>
+        </plugin>
+    </plugins>
+  </build>  
+</project>
+

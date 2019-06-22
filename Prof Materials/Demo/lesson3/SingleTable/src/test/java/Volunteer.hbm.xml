@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 4, 2016 3:49:09 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <joined-subclass name="edu.mum.domain.Volunteer" extends="edu.mum.domain.MemberRole" table="VOLUNTEER" lazy="false">
+        <key>
+            <column name="ID" />
+        </key>
+        <property name="yearsOfService" type="java.lang.Integer">
+            <column name="YEARSOFSERVICE" />
+        </property>
+        <property name="credits" type="java.lang.Integer">
+            <column name="CREDITS" />
+        </property>
+    </joined-subclass>
+</hibernate-mapping>
